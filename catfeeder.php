@@ -1,17 +1,25 @@
 <?php
-
+require_once('catfeedervalidator.php');
 function handleRemainder($remainder)
 {
 
 }
 
-    function dispenceFood($initial_amount, $portion_size)
+    function dispenceFood($initialAmount, $portion_size)
     {
+        $is_valid = validateInitialAmount($initialAmount) &&
+                    validatePortionSize($initialAmount, $portion_size);
+
+        if(!$is_valid) {
+            echo "Validation: Failed! <br />";
+        }  
+       
         $portion = 0;
         $remainder = 0;
 
         $portion = $portion_size;
-        $remainder = $initial_amount - $portion;
+        $remainder = $initialAmount - $portion;
+    
 
         handleRemainder($remainder);
         return $portion;
