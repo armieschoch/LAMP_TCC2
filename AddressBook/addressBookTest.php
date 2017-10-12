@@ -1,5 +1,6 @@
 <?php
 require_once ('addressbook.php');
+require_once ('fileHandler.php');
 
 $person = new Person();
 $person->setfirstName("John");
@@ -21,6 +22,8 @@ $contact->setNotes("Hello Friend!");
 
 $addressBook = new AddressBook();
 $addressBook->addContact($contact);
+
+$fileHandler = new fileHandler();
 
 $all_contacts = $addressBook->getAllContacts();
 print_r($all_contacts);
@@ -47,12 +50,21 @@ echo "<br /> <br />";
 $all_contacts = $addressBook->getAllContacts();
 print_r($all_contacts);
 
-echo "<br /> <br />";
+
 $bob2 = clone $bob;
 $bob2->getPerson()->setfirstName("Bob2");
 $addressBook->updateContact($bob, $bob2);
+
+
+echo "<br /> <br />";
+$all_contacts = $addressBook->getAllContacts();
 print_r($all_contacts);
 
 
+$addressBook->deleteContact($bob2);
+
+echo "<br /> <br />";
+$all_contacts = $addressBook->getAllContacts();
+print_r($all_contacts);
 
 ?>

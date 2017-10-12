@@ -28,7 +28,8 @@ public function updateContact($oldContact, $newContact)
 public function deleteContact($contact)
 {
     $index = array_search($contact, $this->contacts);
-    if($index)
+
+    if($index >= 0)
     {
         unset($this->contacts[$index]);
     }
