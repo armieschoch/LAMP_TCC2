@@ -1,33 +1,22 @@
-<?php 
-    class FileHandler {
-
-        private $filename;
-
-        public function __construct($filename)
-        {
-            $this->filename = $filename;
-        }
-
-        public function readFile()
-        {
-            file_get_contents($this->filename) or
-                          die("Can't create file!");
-        
-            //code to read data from the file goes here
-            $contacts = json_decode($data);
-            return $contacts;
-        }
-
-
-        public function writeFile($contacts)
-        {
-            $data = json_encode($contacts);
-            //code to write data to the file goes here
-
-            fwrite($filename) or 
-                     die("Can't write to the file!");
-            fclose($filename);
-
-        }
+<?php
+class FileHandler
+{
+    private $fileName;
+    public function __construct($fileName)
+    {
+        $this->fileName = $fileName;
     }
-?>
+    public function readFile()
+    {
+        $data = file_get_contents($this->fileName) or
+        die("Unable to read file!");
+        $contacts = unserialize($data);
+        return $contacts;
+    }
+    public function writeFile($contacts)
+    {
+        $data = serialize($contacts);
+        file_put_contents($this->fileName, $data) or
+        die("Unable to save file");
+    }
+}

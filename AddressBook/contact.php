@@ -1,92 +1,96 @@
 <?php
-require_once('address.php');
-require_once('person.php');
-
-class Contact {
-
+require_once "address.php";
+require_once "person.php";
+class Contact
+{
+    private $id;
     private $person;
-    private $address;
-    private $phoneNumber;
+    private $phone_number;
     private $email;
+    private $address;
     private $type;
-    private $comments;
+    private $comment;
     private $notes;
-
-
     public function __construct()
     {
-        $this->person = new Person;
-        $this->address = new Address;
+        $this->person = new Person();
+        $this->address = new Address();
     }
-
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
     public function getPerson()
     {
         return $this->person;
     }
-
     public function setPerson($person)
     {
         $this->person = $person;
     }
-
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
-
     public function getPhoneNumber()
     {
-        return $this->phoneNumber;
+        return $this->phone_number;
     }
-
-    public function setPhoneNumber($phoneNumber)
+    public function setPhoneNumber($phone_number)
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->phone_number = $phone_number;
     }
-
     public function getEmail()
     {
         return $this->email;
     }
-
     public function setEmail($email)
     {
         $this->email = $email;
     }
-
+    public function getAddress()
+    {
+        return $this->address;
+    }
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
     public function getType()
     {
         return $this->type;
     }
-
     public function setType($type)
     {
         $this->type = $type;
     }
-    
-    public function getComments()
+    public function getComment()
     {
-        return $this->comments;
+        return $this->comment;
     }
-
-    public function setComments($comments)
+    public function setComment($comment)
     {
-        $this->comments = $comments;
+        $this->comment = $comment;
     }
-
-    public function getNotes()
+    public function getNote()
     {
-        return $this->notes;
+        return $this->note;
     }
-
-    public function setNotes($notes)
+    public function setNote($note)
     {
-        $this->notes = $notes;
+        $this->note = $note;
+    }
+    public function prettyPrint()
+    {
+        return 
+            $this->person->prettyPrint() .
+            "<br />" .
+            $this->address->prettyPrint() .
+            "<br />" .
+                "$this->phone_number <br/> 
+                $this->email <br/> 
+                $this->type <br/>
+                $this->note <br/>
+                $this->comment";
     }
 }
-?>

@@ -1,6 +1,7 @@
 <?php
 
 class Address {
+    
     private $street;
     private $city;
     private $state;
@@ -45,5 +46,12 @@ class Address {
     {
         $this->zip = $zip;
     }
+
+    public function prettyPrint()
+    {
+
+        return "$this->street <br/>
+                $this->city $this->state $this->zip";
+        }
 }
 ?>

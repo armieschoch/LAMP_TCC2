@@ -24,6 +24,11 @@ class Person {
     {
         $this->lastName = $lastName;
     }
+
+    public function prettyPrint()
+    {
+        return "$this->firstName $this->lastName";
+    }
 }
 
 

@@ -1,55 +1,63 @@
 <?php
-
-require_once('contact.php');
-
-class AddressBook {
-
+require_once "contact.php";
+require_once "fileHandler.php";
+require_once "databaseHandler.php";
+class AddressBook
+{
     private $contacts;
-
-public function __construct()
-{
-    $this->contacts = Array();
-}
-
-public function addContact($contact)
-{
-    $this->contacts[] = $contact;
-}
-
-public function updateContact($oldContact, $newContact)
-{
-    $index = array_search($oldContact, $this->contacts);
-    if($index)
+    private $fileHandler;
+    private $databaseHandler;
+    public function __construct()
     {
-        $this->contacts[$index] = $newContact;
+        $this->fileHandler = new FileHandler("myAddressBook.txt");
+        // $this->contacts = $this->fileHandler->readFile();
+        $this->databaseHandler = new DatabaseHandler();
+        $this->contacts = $this->databaseHandler->readDatabase();
     }
-}
-
-public function deleteContact($contact)
-{
-    $index = array_search($contact, $this->contacts);
-
-    if($index >= 0)
+    public function getAllContacts()
     {
-        unset($this->contacts[$index]);
+        return $this->contacts;
     }
-}
-
-public function getContact($firstName)
-{
-    foreach($this->contacts as $contact)
+    public function addContact($contact)
     {
-        if($contact->getPerson()->getfirstName() == $firstName)
-        {
-            return $contact;
+        $this->contacts[] = $contact;
+        // $this->fileHandler->writeFile($this->contacts);
+        $this->databaseHandler->insertItem($contact);
+    }
+    public function updateContact($old_contact, $new_contact)
+    {
+        $index = array_search($old_contact, $this->contacts);
+        if ($index >= 0) {
+            $this->contacts[$index] = $new_contact;
+            // $this->fileHandler->writeFile($this->contacts);
+            $this->databaseHandler->updateItem
+                ($new_contact, $old_contact->getId());
         }
     }
-}
+    public function deleteContact($id)
+    {       
+        $this->databaseHandler->deleteItem($id);
+        
+    }
+    public function getContact($first_name)
+    {
+        foreach ($this->contacts as $contact) {
+            if ($contact->getPerson()->getFirstName() == $first_name) {
+                return $contact;
+            }
+        }
+    }
 
-public function getAllContacts()
-{
-    return $this->contacts;
-}
+    public function prettyPrint()
+    {
+        $result = "";
 
+        foreach ($this->contacts as $contact)
+        {
+            $result .="<hr/>";
+            $result .=$contact->prettyPrint();
+            $result .="<hr/>";
+        }
+        return $result;
+    }
 }
-?>
