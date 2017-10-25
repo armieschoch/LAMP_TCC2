@@ -2,11 +2,13 @@
 require_once "contact.php";
 require_once "fileHandler.php";
 require_once "databaseHandler.php";
+
 class AddressBook
 {
     private $contacts;
     private $fileHandler;
     private $databaseHandler;
+
     public function __construct()
     {
         $this->fileHandler = new FileHandler("myAddressBook.txt");
@@ -24,15 +26,10 @@ class AddressBook
         // $this->fileHandler->writeFile($this->contacts);
         $this->databaseHandler->insertItem($contact);
     }
-    public function updateContact($old_contact, $new_contact)
+    public function updateContact($contact, $id)
     {
-        $index = array_search($old_contact, $this->contacts);
-        if ($index >= 0) {
-            $this->contacts[$index] = $new_contact;
-            // $this->fileHandler->writeFile($this->contacts);
-            $this->databaseHandler->updateItem
-                ($new_contact, $old_contact->getId());
-        }
+               $this->databaseHandler->updateItem($contact, $id);
+    
     }
     public function deleteContact($id)
     {       
@@ -42,10 +39,25 @@ class AddressBook
     public function getContact($first_name)
     {
         foreach ($this->contacts as $contact) {
-            if ($contact->getPerson()->getFirstName() == $first_name) {
+            if ($contact->getPerson()->getfirstName() == $first_name) {
                 return $contact;
             }
         }
+    }
+
+    public function getContactById($id)
+    {
+        foreach ($this->contacts as $contact) {
+            if ($contact->getid() == $id) {
+                return $contact;
+            }
+        }
+    }
+
+    public function cancelUpdateContact($contact, $id)
+    {
+               $this->databaseHandler->cancelItem($contact, $id);
+    
     }
 
     public function prettyPrint()

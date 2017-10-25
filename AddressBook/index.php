@@ -20,17 +20,19 @@
             echo "</td>";
             
             echo "<td><form method='post' action='update.php'>";
-            echo "<input type='hidden' name='id' value='" .$contact->getId() . "'/>";
+            echo "<input type='hidden' name='id' value='" .$contact->getid() . "'/>";
             echo "<input type='submit' value='Update' />";
             echo "</form>";
             echo "</td>";
 
             echo "<td><form method='post' action='delete.php'>";
-            echo "<input type='hidden' name='id' value='" .$contact->getId() . "'/>";
+            echo "<input type='hidden' name='id' value='" .$contact->getid() . "'/>";
             echo "<input type='submit' value='Delete' />";
             echo "</form>";
             echo "</td>";
             echo "</tr>";
+
+          
         }
 ?>
     </div>

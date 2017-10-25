@@ -1,8 +1,8 @@
 <?php
 require_once "addressbook.php";
 $person = new Person();
-$person->setFirstName("John");
-$person->setLastName("Doe");
+$person->setfirstName("John");
+$person->setlastName("Doe");
 $address = new Address();
 $address->setStreet("123 Main St.");
 $address->setCity("Charleston");

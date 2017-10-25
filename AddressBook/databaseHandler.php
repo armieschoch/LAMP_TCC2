@@ -67,8 +67,8 @@ class DatabaseHandler
             $data->data_seek($i);
             $item = $data->fetch_array(MYSQLI_ASSOC);
             $person = new Person();
-            $person->setFirstName($item['firstName']);
-            $person->setLastName($item['lastName']);
+            $person->setfirstName($item['firstName']);
+            $person->setlastName($item['lastName']);
             $address = new Address();
             $address->setStreet($item['street']);
             $address->setCity($item['city']);
@@ -82,7 +82,7 @@ class DatabaseHandler
             $contact->setNote($item['note']);
             $contact->setComment($item['comment']);
             $contact->setType($item['type']);
-            $contact->setId($item['id']);
+            $contact->setid($item['id']);
             $contacts[] = $contact;
         }
         $data->close();
@@ -94,8 +94,8 @@ class DatabaseHandler
         $this->connectToDatabase();
         $query = self::WRITE_QUERY .
         "(
-                    '" . $item->getPerson()->getFirstName() . "',
-                    '" . $item->getPerson()->getLastName() . "',
+                    '" . $item->getPerson()->getfirstName() . "',
+                    '" . $item->getPerson()->getlastName() . "',
                     '" . $item->getEmail() . "',
                     '" . $item->getPhoneNumber() . "',
                     '" . $item->getNote() . "',
@@ -117,8 +117,8 @@ class DatabaseHandler
     {
         $this->connectToDatabase();
         $query = sprintf(self::UPDATE_QUERY,
-            $item->getPerson()->getFirstName(),
-            $item->getPerson()->getLastName(),
+            $item->getPerson()->getfirstName(),
+            $item->getPerson()->getlastName(),
             $item->getEmail(),
             $item->getPhoneNumber(),
             $item->getNote(),

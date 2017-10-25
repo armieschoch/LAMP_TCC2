@@ -1,6 +1,8 @@
 <?php
     require_once "addressbook.php";
 
+    $id = $_POST["id"];
+
     $person = new Person();
     $person->setfirstName($_POST["firstName"]);
     $person->setlastName($_POST["lastName"]);
@@ -25,7 +27,7 @@
     $addressBook = new AddressBook();
 
     try {
-        $addressBook->addContact($contact);
+        $addressBook->updateContact($contact, $id);
         header("Location: index.php");
         exit();
     } catch (Exception $e) {

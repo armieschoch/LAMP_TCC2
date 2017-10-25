@@ -38,7 +38,7 @@
        Comment:
        <input type="text" name="comment"></input>
  <br />
-<input type="submit" value="Create">
+<input type="submit" value="CREATE">
 </form>
       
 

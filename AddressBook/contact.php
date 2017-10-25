@@ -16,11 +16,11 @@ class Contact
         $this->person = new Person();
         $this->address = new Address();
     }
-    public function getId()
+    public function getid()
     {
         return $this->id;
     }
-    public function setId($id)
+    public function setid($id)
     {
         $this->id = $id;
     }
