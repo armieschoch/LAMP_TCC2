@@ -15,47 +15,75 @@
     <div id="addressBook" class ="container-fluid card">
         <div style="width: 40rem;">
             
-        <div class="card-body">
+            <div class="card-body">
  
-        <div class="card-header">
+            <div class="card-header">
         <form action="create.php">
             <input class="btn btn-success btn-outline-success btn-lg" type="submit" value="Create" />
             
         </form>
         </div>
+
         <div class="card">
-  <div class="card-body">
-<table class="table table-dark table-striped">
-    <?php
+            <div class="card-body">
+                <div id="accordion" role="tablist">
+<?php
+
         require_once "addressbook.php";
         $addressbook = new AddressBook();
         $all_contacts = $addressbook->getAllContacts();
         
         foreach ($all_contacts as $contact)
         {
-            echo "<tr>";
-            echo "<td>";
-            echo $contact->prettyPrint();
-            echo "</td>";
+
+            echo '<div class="card">
+            <div class="card-header" role="tab" id="headingOne">
+              <h5 class="mb-0">
+                <a data-toggle="collapse" href="#collapse' . $contact->getid() . '"
+                aria-expanded="true" aria-controls="collapse' . $contact->getid() . '">
+                  ' . $contact->getPerson()->prettyPrint() . '
+                </a>
+              </h5>
+            </div>';
+           
+
+            echo '<div id="collapse' . $contact->getid() . '" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">';
+
+            echo '<div class="container">
+                    <div class="row">
+
+              <div class="col">';
+              
+          
+                echo $contact->prettyPrint();
+
+          echo '</div>';
+
+          echo '<div class="col-2">';
             
-            echo "<td><form method='post' action='update.php'>";
+            echo "<form method='post' action='update.php'>";
             echo "<input type='hidden' name='id' value='" .$contact->getid() . "'/>";
             echo "<input type='submit' value='Update' class='btn-warning' />";
             echo "</form>";
-            echo "</td>";
+            echo '</div>';
 
-            echo "<td><form method='post' action='delete.php'>";
+            echo '<div class="col-2">';
+
+            echo "<form method='post' action='delete.php'>";
             echo "<input type='hidden' name='id' value='" .$contact->getid() . "'/>";
             echo "<input type='submit' value='Delete' class= 'btn-danger'/>";
             echo "</form>";
-            echo "</td>";
-            echo "</tr>";
+            echo '</div></div></div>';
+           
 
-          
+          echo '  </div>
+          </div>
+          </div>';
         }
 ?>
     </div>
-</table>
+</div>
 </div>
 </div>
 </div>
