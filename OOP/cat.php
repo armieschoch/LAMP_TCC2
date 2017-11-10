@@ -1,7 +1,10 @@
 <?php 
 
 require_once ("pet.php");
-    class Cat extends Pet //class
+require_once ("iNameTag.php");
+require_once ("NameTagWearingPet.php");
+
+    class Cat extends NametagWearingPet 
     {   
        private $breed;
  

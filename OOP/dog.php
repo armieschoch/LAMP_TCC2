@@ -1,13 +1,15 @@
 <?php 
 
 require_once ("pet.php");
-require_once ("retriever.php");
-require_once ("mammalType.php");
+require_once ("iNameTag.php");
+require_once ("NameTagWearingPet.php");
+// require_once ("retriever.php");
+// require_once ("mammalType.php");
 
-    class Dog extends Pet //class
+    class Dog extends NametagWearingPet 
     {   
 
-        use MammalType;
+        // use MammalType;
 
        private $breed;
  
@@ -26,10 +28,10 @@ require_once ("mammalType.php");
             return "Woofff <br />";
         }
 
-        // public function sayHello()
-        // {
-        //     echo "<br /> hello from Dog";
-        // }
+        public function sayHello()
+        {
+            echo "<br /> hello from Dog";
+        }
     }
 
 ?>
