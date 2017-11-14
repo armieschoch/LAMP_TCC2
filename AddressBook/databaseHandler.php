@@ -2,7 +2,7 @@
 class DatabaseHandler
 {
     const DATABASE_HOST = 'localhost';
-    const DATABASE_SCHEMA = 'addressbok';
+    const DATABASE_SCHEMA = 'addressbook';
     const DATABASE_USER = 'developer';
     const DATABASE_PASSWORD = 'bacon';
     const READ_QUERY = 'SELECT * FROM contact';
@@ -37,7 +37,26 @@ class DatabaseHandler
 
         const DELETE_QUERY = "DELETE FROM contact WHERE id ='%s'";
 
+        const CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS `contact` (
+            `id` int(11) NOT NULL,
+            `firstName` varchar(50) NOT NULL,
+            `lastName` varchar(50) NOT NULL,
+            `email` varchar(100) DEFAULT NULL,
+            `phone` varchar(45) NOT NULL,
+            `note` varchar(100) DEFAULT NULL,
+            `comment` varchar(100) DEFAULT NULL,
+            `street` varchar(100) DEFAULT NULL,
+            `city` varchar(50) DEFAULT NULL,
+            `state` varchar(2) DEFAULT NULL,
+            `zip` varchar(45) DEFAULT NULL,
+            `type` varchar(45) DEFAULT NULL
+        )ENGINE=InnoDB DEFAULT CHARSET=latin1; ";
+
     private $connection;
+
+    public function __construct(){
+        $this->createTable();
+    }
     public function connectToDatabase()
     {
         $this->connection = new mysqli(
@@ -143,6 +162,19 @@ class DatabaseHandler
         $query = sprintf(self::DELETE_QUERY, $id);
 
         $result = $this->connection->query($query);
+
+        if(!$result) {
+            die($this->connection->error);
+        }
+        $this->disconnectFromDatabase();
+    } 
+
+    private function createTable(){
+
+        $this->connectToDatabase();
+        // $query = sprintf(self::DELETE_QUERY, $id);
+
+        $result = $this->connection->query(self::CREATE_TABLE_QUERY);
 
         if(!$result) {
             die($this->connection->error);

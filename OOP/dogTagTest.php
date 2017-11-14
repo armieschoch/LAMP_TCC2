@@ -56,7 +56,7 @@
     $tag = new nameTag();
     $tag->setText("<br /> <br /> Dog's name is Rover" . " if found call 800-123-4567");
 
-    $pet->setnameTag($tag);
+    $pet->setnameTag($tag, "neck");
 
     echo $pet->getnameTag();
     // echo "<br />" . $pet->getBreed();
@@ -66,7 +66,7 @@
 
     $tag2 = new nameTag();
     $tag2->setText("<br /> <br /> Cat's name is Felix" . " if found call 800-123-4567");
-    $pet->setnameTag($tag2);
+    $pet->setnameTag($tag2, "body");
 
     echo $pet->getnameTag();
     // echo "<br />" . $pet->getBreed();

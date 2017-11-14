@@ -3,11 +3,11 @@
     {   
         private $text;
     
-        public function __construct($text) 
-        {  //constructor
+        // public function __construct($text) 
+        // {  //constructor
     
-            $this->text = $text;
-        }  //end of constructor
+        //   //  $this->text = $text;
+        // }  //end of constructor
     
         public function setText ($text) //Setter
         {

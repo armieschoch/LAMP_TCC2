@@ -9,11 +9,11 @@
     private $name;
  
 
-    public function __construct($name, $nameTag) 
+    public function __construct(/*$name, $nameTag*/) 
     {  //constructor
 
-        $this->name = $name;
-        $this->breed = $breed;
+        // $this->name = $name;
+        // $this->breed = $breed;
     }  //end of constructor
 
      public function setName ($name) //Setter
