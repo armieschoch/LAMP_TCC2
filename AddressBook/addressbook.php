@@ -1,10 +1,12 @@
 <?php
 require_once "contact.php";
 require_once "fileHandler.php";
-require_once "databaseHandler.php";
+require_once "Traits/databaseConnected.php";
 
 class AddressBook
 {
+    use Traits\databaseConnected;
+
     private $contacts;
     private $fileHandler;
     private $databaseHandler;
@@ -13,29 +15,33 @@ class AddressBook
     {
         $this->fileHandler = new FileHandler("myAddressBook.txt");
         // $this->contacts = $this->fileHandler->readFile();
-        $this->databaseHandler = new DatabaseHandler();
-        $this->contacts = $this->databaseHandler->readDatabase();
+        // $this->databaseHandler = new DatabaseHandler();
+        $this->contacts = $this->getdatabaseHandler()->readDatabase();
     }
+    
     public function getAllContacts()
     {
         return $this->contacts;
     }
+
     public function addContact($contact)
     {
         $this->contacts[] = $contact;
         // $this->fileHandler->writeFile($this->contacts);
-        $this->databaseHandler->insertItem($contact);
+        $this->getdatabaseHandler()->insertItem($contact);
     }
+
     public function updateContact($contact, $id)
     {
-               $this->databaseHandler->updateItem($contact, $id);
+               $this->getdatabaseHandler()->updateItem($contact, $id);
     
     }
+
     public function deleteContact($id)
     {       
-        $this->databaseHandler->deleteItem($id);
-        
+        $this->getdatabaseHandler()->deleteItem($id);  
     }
+
     public function getContact($first_name)
     {
         foreach ($this->contacts as $contact) {
@@ -56,7 +62,7 @@ class AddressBook
 
     public function cancelUpdateContact($contact, $id)
     {
-               $this->databaseHandler->cancelItem($contact, $id);
+               $this->getdatabaseHandler()->cancelItem($contact, $id);
     
     }
 

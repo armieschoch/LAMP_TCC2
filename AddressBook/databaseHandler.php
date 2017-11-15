@@ -1,11 +1,11 @@
 <?php
-class DatabaseHandler
+
+require_once ("abstractDatabaseHandler.php");
+require_once ("DatabaseConnectionInfo.php");
+
+class databaseHandler extends abstractDatabaseHandler
 {
-    const DATABASE_HOST = 'localhost';
-    const DATABASE_SCHEMA = 'addressbook';
-    const DATABASE_USER = 'developer';
-    const DATABASE_PASSWORD = 'bacon';
-    const READ_QUERY = 'SELECT * FROM contact';
+   const READ_QUERY = 'SELECT * FROM contact';
     const WRITE_QUERY = 'INSERT INTO contact
     (
         firstName,
@@ -52,31 +52,16 @@ class DatabaseHandler
             `type` varchar(45) DEFAULT NULL
         )ENGINE=InnoDB DEFAULT CHARSET=latin1; ";
 
-    private $connection;
-
-    public function __construct(){
+    public function __construct()
+    {
+        parent::__construct();
         $this->createTable();
+        
     }
-    public function connectToDatabase()
-    {
-        $this->connection = new mysqli(
-            self::DATABASE_HOST,
-            self::DATABASE_USER,
-            self::DATABASE_PASSWORD,
-            self::DATABASE_SCHEMA
-        );
-        if ($this->connection->connect_error) {
-            die($this->connection->connect_error);
-        }
-    }
-    public function disconnectFromDatabase()
-    {
-        $this->connection->close();
-    }
+    
     public function readDatabase()
     {
         $contacts = array();
-        $this->connectToDatabase();
         $data = $this->connection->query(self::READ_QUERY);
         if (!$data) {
             die($this->connection->error);
@@ -104,13 +89,12 @@ class DatabaseHandler
             $contact->setid($item['id']);
             $contacts[] = $contact;
         }
-        $data->close();
-        $this->disconnectFromDatabase();
+      
         return $contacts;
     }
+
     public function insertItem($item)
     {
-        $this->connectToDatabase();
         $query = self::WRITE_QUERY .
         "(
                     '" . $item->getPerson()->getfirstName() . "',
@@ -125,16 +109,15 @@ class DatabaseHandler
                     '" . $item->getAddress()->getZip() . "',
                     '" . $item->getType() . "'
                     )";
-        //  echo "<br />$query<br />";
+
         $result = $this->connection->query($query);
         if (!$result) {
             die($this->connection->error);
         }
-        $this->disconnectFromDatabase();
     }
+
     public function updateItem($item, $id)
     {
-        $this->connectToDatabase();
         $query = sprintf(self::UPDATE_QUERY,
             $item->getPerson()->getfirstName(),
             $item->getPerson()->getlastName(),
@@ -154,11 +137,10 @@ class DatabaseHandler
         if (!$result) {
             die($this->connection->error);
         }
-        $this->disconnectFromDatabase();
     }
 
-    public function deleteItem($id){
-        $this->connectToDatabase();
+    public function deleteItem($id)
+    {
         $query = sprintf(self::DELETE_QUERY, $id);
 
         $result = $this->connection->query($query);
@@ -166,19 +148,26 @@ class DatabaseHandler
         if(!$result) {
             die($this->connection->error);
         }
-        $this->disconnectFromDatabase();
     } 
 
-    private function createTable(){
-
-        $this->connectToDatabase();
-        // $query = sprintf(self::DELETE_QUERY, $id);
-
+    private function createTable()
+    {
         $result = $this->connection->query(self::CREATE_TABLE_QUERY);
 
         if(!$result) {
             die($this->connection->error);
         }
-        $this->disconnectFromDatabase();
     } 
+
+    public function getDatabaseConnectionInfo()
+    {
+        $connectionInfo = new DatabaseConnectionInfo();
+
+        $connectionInfo->databaseHost     = ('localhost');
+        $connectionInfo->databaseUser     = ('developer');
+        $connectionInfo->databasePassword = ('bacon');
+        $connectionInfo->databaseSchema   = ('addressbook');
+
+        return $connectionInfo;
+    }
 }
