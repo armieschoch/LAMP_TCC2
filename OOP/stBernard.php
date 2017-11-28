@@ -5,7 +5,7 @@ require_once ("abstractSnowDog.php");
         public function playInSnow()
 
         {
-            echo "<br /> St Bernard Yeah!!!!!!!!!!!";
+            echo "<br /> St Bernard Yooohooooo yeah!!!!!!!!!!!";
            
         }
     }
