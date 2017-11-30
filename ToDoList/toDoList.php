@@ -31,7 +31,7 @@ class ToDoList
         $this->getdatabaseHandler()->insertItem($task);
     }
 
-    public function completeTask($task, $id)
+    public function isComplete($task, $id)
     {
                $this->getdatabaseHandler()->completeItem($task, $id);
     

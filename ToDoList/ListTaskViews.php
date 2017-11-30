@@ -33,24 +33,23 @@
         
         foreach ($all_tasks as $task)
         {
+
             echo "<tr>";
             echo "<td>";
-            echo $task->prettyPrint();
+            echo $task->getId();
+            echo "</td>";
+            echo "<td>";
+            echo $task->getTitle();
+            echo "</td>";
+            echo "<td>";
+            echo $task->getisComplete();
             echo "</td>";
             
             echo "<td><form method='post' action='update.php'>";
             echo "<input type='hidden' name='id' value='" .$task->getid() . "'/>";
-            echo "<input type='submit' value='Update' class='btn-warning' />";
+            echo "<input type='submit' value='Complete' class='btn-warning' />";
             echo "</form>";
             echo "</td>";
-
-            echo "<td><form method='post' action='delete.php'>";
-            echo "<input type='hidden' name='id' value='" .$task->getid() . "'/>";
-            echo "<input type='submit' value='Delete' class= 'btn-danger'/>";
-            echo "</form>";
-            echo "</td>";
-            echo "</tr>";
-
           
         }
 ?>

@@ -5,9 +5,9 @@ require_once ("DBConnectionInfo.php");
 
 class DBController extends DBHandler
 {
-   const READ_QUERY = 'SELECT * FROM to_do_list';
-    const WRITE_QUERY = 'INSERT INTO to_do_list
-    (
+    const READ_QUERY = 'SELECT * FROM to_do_list';
+    const WRITE_QUERY = 'INSERT INTO to_do_list (
+       
         Title,
         isComplete
     )
@@ -18,11 +18,8 @@ class DBController extends DBHandler
         isComplete = '%s',
         WHERE id = '%s'";
 
-
-        const DELETE_QUERY = "DELETE FROM to_do_list WHERE id ='%s'";
-
         const CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS `to_do_list` (
-            `id` int(11) NOT NULL,
+            `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
             `Title` varchar(150) NOT NULL,
             `isComplete` boolean NOT NULL
         )ENGINE=InnoDB DEFAULT CHARSET=latin1 ";
@@ -45,11 +42,11 @@ class DBController extends DBHandler
         for ($i = 0; $i < $rows; $i++) {
             $data->data_seek($i);
             $item = $data->fetch_array(MYSQLI_ASSOC);
-            $title = new Task();
-            $title->setTitle($item['title']);
-            $title->setcompleteTask($item['isComplete']);
-            $title->setid($item['id']);
-            $title[] = $task;
+            $task = new Task();
+            $task->setTitle($item['Title']);
+            $task->setisComplete($item['isComplete']);
+            $task->setId($item['id']);
+            $tasks[] = $task;
         }
       
         return $tasks;
@@ -60,8 +57,9 @@ class DBController extends DBHandler
         $query = self::WRITE_QUERY .
         "(
                     '" . $item->getTitle() . "',
-                    '" . $item->getcompleteTask() . "',
+                    '" . $item->getisComplete() . "'
                     )";
+echo "$query";
 
         $result = $this->connection->query($query);
         if (!$result) {
@@ -72,8 +70,8 @@ class DBController extends DBHandler
     public function updateItem($item, $id)
     {
         $query = sprintf(self::UPDATE_QUERY,
-            $item->getTitle($item),
-            $item->getcompleteTask($item),
+            $item->getTitle($title),
+            $item->getisComplete($isComplete),
             $id
         );
         echo "<br />$query<br />";
@@ -82,17 +80,6 @@ class DBController extends DBHandler
             die($this->connection->error);
         }
     }
-
-    public function deleteItem($id)
-    {
-        $query = sprintf(self::DELETE_QUERY, $id);
-
-        $result = $this->connection->query($query);
-
-        if(!$result) {
-            die($this->connection->error);
-        }
-    } 
 
     private function createTable()
     {

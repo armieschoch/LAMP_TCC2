@@ -17,20 +17,20 @@ class Task {
         $this->title = $title;
     }
 
-    public function getcompleteTask()
+    public function getisComplete()
     {
         return $this->isComplete;
     }
 
-    public function setcompleteTask($isComplete)
+    public function setisComplete($isComplete)
     {
         $this->isComplete = $isComplete;
     }
-    public function getid()
+    public function getId()
     {
         return $this->id;
     }
-    public function setid($id)
+    public function setId($id)
     {
         $this->id = $id;
     }
