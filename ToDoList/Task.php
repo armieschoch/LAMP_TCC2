@@ -5,6 +5,8 @@ class Task {
     private $title;
     private $isComplete;
     private $id;
+    private $DateCreated;
+    private $DateCompleted;
    
 
     public function getTitle()
@@ -34,6 +36,24 @@ class Task {
     {
         $this->id = $id;
     }
+    public function getDateCreated()
+    {
+        return $this->getDateCreated;
+    }
 
+    public function setDateCreated($DateCreated)
+    {
+        $this->DateCreated = $DateCreated;
+    }
+
+    public function getDateCompleted()
+    {
+        return $this->getDateCreated;
+    }
+
+    public function setDateCompleted($DateCompleted)
+    {
+        $this->DateCompleted = $DateCompleted;
+    }
 }
 ?>

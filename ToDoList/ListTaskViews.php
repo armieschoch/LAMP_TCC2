@@ -9,56 +9,65 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-
 </head>
 <body>
     <div id="toDoList" class ="container-fluid card">
-        <div style="width: 40rem;">
+        <div style="width: 60rem;">
             
         <div class="card-body">
  
         <div class="card-header">
         <form action="createTask.php">
             <input class="btn btn-success btn-outline-success btn-lg" type="submit" value="Create Task" />
-            
-        </form>
+            </form>
         </div>
         <div class="card">
   <div class="card-body">
-<table class="table table-dark table-striped">
+
     <?php
         require_once "toDoList.php";
         $task = new ToDoList();
         $all_tasks = $task->getAllTasks();
-        
+
+        echo '<ul class="list-group">
+                <li class="list-group-item">
+                <div class="row"> 
+                <div class="col-sm"># </div>
+                <div class="col-sm">Title </div> 
+                <div class="col-sm"> Date Created </div>
+                <div class="col-sm"> Date Completed </div>
+                <div class="col-sm">  </div>
+                </div>';
+
         foreach ($all_tasks as $task)
         {
+            $class = $task->getisComplete() ?
+            'style = "text-decoration: line-through"' :
+            '' ;
 
-            echo "<tr>";
-            echo "<td>";
-            echo $task->getId();
-            echo "</td>";
-            echo "<td>";
-            echo $task->getTitle();
-            echo "</td>";
-            echo "<td>";
-            echo $task->getisComplete();
-            echo "</td>";
-            
-            echo "<td><form method='post' action='update.php'>";
-            echo "<input type='hidden' name='id' value='" .$task->getid() . "'/>";
-            echo "<input type='submit' value='Complete' class='btn-warning' />";
-            echo "</form>";
-            echo "</td>";
-          
+            $button = !$task->getisComplete() ?
+            '<button type = "submit" class = "btn btn-primary">Complete</button>' :
+            ' ';
+
+            echo '
+            <li class="list-group-item">
+            <form method="post" action="isComplete.php" name="createForm' . $task->getId() .'">
+            <input type="hidden" name="taskId" value=' .$task->getId() .'>
+            <div class="row">'
+           . '<div class="col-sm">' . $task->getId() . '</div>'
+           . '<div class="col-sm" '. $class . '>' . $task->getTitle() . '</div>'
+           . '<div class="col-sm">' . $task->getDateCreated() . '</div>'
+           . '<div class="col-sm">' . $task->getDateCompleted() . '</div>'
+           . '<div class="col-sm">' . $button . '</div></div></form></li>'
+
+           . '</ul>';    
         }
 ?>
     </div>
-</table>
 </div>
 </div>
 </div>
-
+</div>
 </body>
 
 </html>

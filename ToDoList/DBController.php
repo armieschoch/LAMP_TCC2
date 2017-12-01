@@ -9,19 +9,21 @@ class DBController extends DBHandler
     const WRITE_QUERY = 'INSERT INTO to_do_list (
        
         Title,
-        isComplete
+        isComplete,
+        DateCreated
     )
      VALUES';
 
     const UPDATE_QUERY = "UPDATE to_do_list SET
-        Title = '%s',
-        isComplete = '%s',
+        isComplete = '1',
+        DateCompleted = '%s'
         WHERE id = '%s'";
 
         const CREATE_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS `to_do_list` (
             `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
             `Title` varchar(150) NOT NULL,
             `isComplete` boolean NOT NULL
+         
         )ENGINE=InnoDB DEFAULT CHARSET=latin1 ";
 
     public function __construct()
@@ -45,6 +47,8 @@ class DBController extends DBHandler
             $task = new Task();
             $task->setTitle($item['Title']);
             $task->setisComplete($item['isComplete']);
+            $task->setDateCreated($item['DateCreated']);
+            $task->setDateCompleted($item['DateCompleted']);
             $task->setId($item['id']);
             $tasks[] = $task;
         }
@@ -58,6 +62,8 @@ class DBController extends DBHandler
         "(
                     '" . $item->getTitle() . "',
                     '" . $item->getisComplete() . "'
+                    '" . $item->getDateCreated() . "'
+                    '" . $item->getDateCompleted() . "'
                     )";
 echo "$query";
 
@@ -67,11 +73,9 @@ echo "$query";
         }
     }
 
-    public function updateItem($item, $id)
+    public function updateItem($id)
     {
         $query = sprintf(self::UPDATE_QUERY,
-            $item->getTitle($title),
-            $item->getisComplete($isComplete),
             $id
         );
         echo "<br />$query<br />";
